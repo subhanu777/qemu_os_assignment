@@ -31,4 +31,5 @@ SYSCALL(sleep)
 SYSCALL(uptime)
 SYSCALL(ps_sys)
 SYSCALL(memtop)
-
+SYSCALL(cps)
+SYSCALL(chpr)

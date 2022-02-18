@@ -25,7 +25,8 @@ int sleep(int);
 int uptime(void);
 int ps_sys(void);		//subhanu:adding
 int memtop(void);		//subhanu adding
-
+int cps(void);
+int chpr(int pid,int priority);		//subhanu:adding
 
 
 //int getptable(int,void*);   //subhanu : adding this for accessing process table

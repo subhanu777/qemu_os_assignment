@@ -184,6 +184,10 @@ UPROGS=\
 	_process_list\
 	_ps_sys\
 	_memtop\
+	_chpr\
+	_cps\
+
+
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
@@ -251,6 +255,8 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 # check in that version.
 
 EXTRA=\
+      	chpr.c\
+	cps.c\
       	memtop.c\
 	ps_sys.c\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\

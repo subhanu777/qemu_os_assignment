@@ -546,12 +546,11 @@ procdump(void)
 int ps_sys()
 
 {
-	int temp=0;
 
         struct proc *p;
 	//struct sysinfo *sys;
         sti();                  //Enable interrupt
-	int totalmem = (int)PHYSTOP;
+	//int totalmem = (int)PHYSTOP;
 
 
         acquire(&ptable.lock);
@@ -562,12 +561,12 @@ int ps_sys()
 	{
                 if(p->state == RUNNING)
 		{
-			cprintf("pid: %d \t name = %s \t size=%d \n",p->pid,p->name,totalmem);
+			cprintf("pid: %d \t name = %s \n",p->pid,p->name);
 		}
 	}
 
 
-	for(p = ptable.proc; p< &ptable.proc[NPROC];p++)
+	/*for(p = ptable.proc; p< &ptable.proc[NPROC];p++)
         {
                 if(p->pid!=0)
                 {
@@ -575,7 +574,7 @@ int ps_sys()
                         temp= temp+size;
                 }
         }
-        cprintf("used = %d\t available = %d", temp, (totalmem-temp));
+        cprintf("used = %d\t available = %d", temp, (totalmem-temp));*/
 
         release(&ptable.lock);
         return 22;
@@ -599,12 +598,123 @@ int memtop()
 			temp= temp+size;
 		}
 	}
-	cprintf("used = %d\t available = %d", temp, (total_mem-temp));
+	cprintf("available memory= %d", (total_mem-temp));
 	//release(&ptable.lock);
 	return 23;
 }
 
 
+/*
+int cps()
+{
 
+	struct proc *p;
+
+	//Enables interrupts on this processor.
+
+	sti();
+
+
+
+	//Loop over process table looking for process with pid.
+
+	acquire(&ptable.lock);
+
+	cprintf("name \t pid \t state \t priority \n");
+
+	for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+	{
+
+		if(p->state == SLEEPING)
+
+			cprintf("%s\t %d \t SLEEPING \t %d \n ", p->name,p->pid,p->priority);
+
+		else if(p->state == RUNNING)
+
+			cprintf("%s\t %d \t RUNNING \t %d \n ", p->name,p->pid,p->priority);
+
+		else if(p->state == RUNNABLE)
+
+			cprintf("%s\t %d \t RUNNABLE \t %d \n ", p->name,p->pid,p->priority);
+
+	}
+
+	release(&ptable.lock);
+
+	return 24;
+
+}
+*/
+
+int cps(void)
+{
+	struct proc *p;
+	int count=0;
+	sti();
+	acquire(&ptable.lock);
+	cprintf("NAME \t PID \t STATE \t PRIORITY\n");
+	for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+	{
+		if(p->state == EMBRYO || p->state == SLEEPING || p->state == RUNNABLE || p->state == RUNNING || p->state == ZOMBIE)
+		{
+			count++;
+			char state[30];
+			if(p->state == EMBRYO)
+			{
+				strncpy(state,"EMBROY",30);
+			} 
+			if(p->state == SLEEPING)
+			{
+				strncpy(state,"SLEEPING",30);
+			}
+		       	if(p->state == RUNNABLE)
+			{
+				strncpy(state,"RUNNABLE",30);
+			} 
+			if(p->state == RUNNING)
+			{
+				strncpy(state,"RUNNING",30);
+			} 
+			if(p->state == ZOMBIE)	
+			{
+				strncpy(state,"ZOMBIE",30);
+			}
+			cprintf("%s \t %d \t %s \t %d\n",p->name,p->pid,state,p->priority);
+		}
+	}
+	cprintf("No. of process is: %d\n",count);
+	release(&ptable.lock);
+	return 24;
+}
+
+
+
+
+int chpr(int pid, int priority)
+{
+
+	struct proc *p;
+
+	acquire(&ptable.lock);
+
+	for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+	{
+
+		if(p->pid == pid)
+		{
+
+			p->priority = priority;
+
+			break;
+
+		}
+
+	}
+
+	release(&ptable.lock);
+
+	return pid;
+
+}
 
 //............................................................subhanu ended adding

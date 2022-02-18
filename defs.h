@@ -122,8 +122,8 @@ void            wakeup(void*);
 void            yield(void);
 int 		ps_sys(void);		//subhanu
 int 		memtop(void);		//subhanu
-
-//int		change_prio(int pid,int priority);		//subhanu
+int 		cps(void);		//subhanu
+int		chpr(int pid,int priority);		//subhanu
 // swtch.S
 void            swtch(struct context**, struct context*);
 

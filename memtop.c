@@ -5,7 +5,7 @@
 
 int main(int argc,char *argv[])
 {
-	printf(1,"Hi subhanu");
+	//printf(1,"Hi subhanu");
 	memtop();
 	exit();
 }

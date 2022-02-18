@@ -105,8 +105,8 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_ps_sys(void);		//subhanu : adding
 extern int sys_memtop(void);
-//extern int sys_getptable(void);		//subhanu : adding
-//extern int sys_getppid(void);		//subhanu : adding
+extern int sys_cps(void);		//subhanu : adding
+extern int sys_chpr(void);		//subhanu : adding
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -130,9 +130,10 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_ps_sys]	sys_ps_sys,		//subhanu : adding
-//[SYS_getptable]	sys_getptable,		// subhanu : adding
-//[SYS_getpid] sys_getppid,		//subhanu : adding
+[SYS_ps_sys]	sys_ps_sys,			//subhanu adding
+[SYS_memtop]	sys_memtop,		//subhanu : adding
+[SYS_cps]	sys_cps,		// subhanu : adding
+[SYS_chpr] 	sys_chpr,		//subhanu : adding
 };
 
 void

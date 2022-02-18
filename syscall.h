@@ -22,4 +22,5 @@
 #define SYS_close  21
 #define SYS_ps_sys 22		//subhanu :adding
 #define SYS_memtop 23		//subhanu : adding
-				//subhanu : adding
+#define SYS_cps	   24
+#define SYS_chpr   25		//subhanu : adding
